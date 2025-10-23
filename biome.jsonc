@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "linter": {
+    "rules": {
+      "style": {
+        "noMagicNumbers": "off"
+      },
+      "performance": {
+        "noNamespaceImport": "off"
+      }
+    }
+  },
+  "extends": ["ultracite"]
+}
