@@ -13,3 +13,10 @@ export type ApiPaginatedResponse<T> = ApiResponse<T[]> & {
     totalPages: number;
   };
 };
+
+export type FetchParams = {
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  sortOrder?: "asc" | "desc";
+};

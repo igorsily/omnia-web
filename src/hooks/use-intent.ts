@@ -1,13 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-import type { ApiPaginatedResponse } from "@/types/api";
-
-export type FetchUsersParams = {
-  page?: number;
-  pageSize?: number;
-  sortBy?: string;
-  sortOrder?: "asc" | "desc";
-};
+import { api } from "@/lib/axios";
+import type { ApiPaginatedResponse, FetchParams } from "@/types/api";
 
 export const intentTableSchema = z.object({
   id: z.string(),
@@ -19,19 +13,23 @@ export const intentTableSchema = z.object({
 
 export type IntentTable = z.infer<typeof intentTableSchema>;
 
-const fetchIntents = async (): Promise<ApiPaginatedResponse<IntentTable>> => {
-  const response = await fetch("http://localhost:3333/api/nlp/intents", {
-    method: "GET",
-    credentials: "include",
+const fetchIntents = async (
+  params: FetchParams
+): Promise<ApiPaginatedResponse<IntentTable>> => {
+  const response = await api.get("/nlp/intents", {
+    params,
   });
 
-  const body: ApiPaginatedResponse<IntentTable> = await response.json();
-  return body;
+  return response.data as ApiPaginatedResponse<IntentTable>;
 };
 
-export function useIntents() {
+export function useIntents({ page = 0, limit = 10 }: FetchParams = {}) {
   return useQuery({
-    queryKey: ["intents"],
-    queryFn: () => fetchIntents(),
+    queryKey: ["intents", page, limit],
+    queryFn: () =>
+      fetchIntents({
+        page,
+        limit,
+      }),
   });
 }

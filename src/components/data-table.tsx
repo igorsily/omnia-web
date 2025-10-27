@@ -62,7 +62,7 @@ export function DataTable<TData, TValue>({
   isLoading = false,
   onSortingChange,
   onPaginationChange,
-  totalCount,
+  totalCount = 0,
   manualPagination = false,
   manualSorting = false,
 }: DataTableProps<TData, TValue>) {

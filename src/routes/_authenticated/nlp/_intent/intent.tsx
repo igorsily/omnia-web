@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { DataTable, type SortingParams } from "@/components/data-table";
 import { useIntents } from "@/hooks/use-intent";
+import type { FetchParams } from "@/types/api";
 import { columns } from "./_intent-colum";
 
 export const Route = createFileRoute("/_authenticated/nlp/_intent/intent")({
@@ -8,7 +10,9 @@ export const Route = createFileRoute("/_authenticated/nlp/_intent/intent")({
 });
 
 function RouteComponent() {
-  const { data, isLoading } = useIntents();
+  const [params, setParams] = useState<FetchParams>({});
+
+  const { data, isLoading } = useIntents(params);
 
   const handleCreateClick = () => {
     // Aqui você pode abrir um dialog/modal para criar novo usuário
@@ -17,7 +21,12 @@ function RouteComponent() {
 
   const handleSortingChange = (newSorting: SortingParams) => {};
 
-  const handlePaginationChange = (newPage: number, newPageSize: number) => {};
+  const handlePaginationChange = (page: number, limit: number) => {
+    setParams({
+      page,
+      limit,
+    });
+  };
 
   return (
     <DataTable
