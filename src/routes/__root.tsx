@@ -8,16 +8,6 @@ import { Toaster } from "@/components/ui/sonner";
 import { createAuthContext } from "@/guards/route-guard";
 import "../index.css";
 
-type RouterContext = {
-  meta: {
-    breadcrumb?: string | ((params: Record<string, string>) => string);
-  }
-  auth: {
-    isAuthenticated: boolean;
-    user: unknown;
-  };
-};
-
 export const Route = createRootRouteWithContext<RouterContext>()({
   async beforeLoad() {
     return await createAuthContext();

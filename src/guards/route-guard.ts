@@ -6,6 +6,7 @@ type RouteContext = LoaderFnContext & {
   meta?: {
     requireAuth?: boolean;
     requireGuest?: boolean;
+    breadcrumb?: string | ((params: Record<string, string>) => string);
   };
 };
 
