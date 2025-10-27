@@ -1,5 +1,5 @@
+import { Link } from "@tanstack/react-router";
 import { ChevronRight, type LucideIcon } from "lucide-react";
-
 import {
   Collapsible,
   CollapsibleContent,
@@ -29,6 +29,8 @@ export function NavMain({
     }[];
   }[];
 }) {
+  const normalizeUrl = (url: string) => (url.startsWith("/") ? url : `/${url}`);
+
   return (
     <SidebarGroup>
       <SidebarMenu>
@@ -52,9 +54,9 @@ export function NavMain({
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
+                        <Link to={normalizeUrl(`${item.url}/${subItem.url}`)}>
                           <span>{subItem.title}</span>
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   ))}

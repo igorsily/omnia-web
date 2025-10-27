@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PublicLoginRouteImport } from './routes/_public/login'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedNlpIntentRouteImport } from './routes/_authenticated/nlp/intent'
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
@@ -38,16 +39,23 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedNlpIntentRoute = AuthenticatedNlpIntentRouteImport.update({
+  id: '/nlp/intent',
+  path: '/nlp/intent',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/login': typeof PublicLoginRoute
+  '/nlp/intent': typeof AuthenticatedNlpIntentRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/login': typeof PublicLoginRoute
+  '/nlp/intent': typeof AuthenticatedNlpIntentRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -56,12 +64,13 @@ export interface FileRoutesById {
   '/_public': typeof PublicRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_public/login': typeof PublicLoginRoute
+  '/_authenticated/nlp/intent': typeof AuthenticatedNlpIntentRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/login'
+  fullPaths: '/' | '/dashboard' | '/login' | '/nlp/intent'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/login'
+  to: '/' | '/dashboard' | '/login' | '/nlp/intent'
   id:
     | '__root__'
     | '/'
@@ -69,6 +78,7 @@ export interface FileRouteTypes {
     | '/_public'
     | '/_authenticated/dashboard'
     | '/_public/login'
+    | '/_authenticated/nlp/intent'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -114,15 +124,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/nlp/intent': {
+      id: '/_authenticated/nlp/intent'
+      path: '/nlp/intent'
+      fullPath: '/nlp/intent'
+      preLoaderRoute: typeof AuthenticatedNlpIntentRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedNlpIntentRoute: typeof AuthenticatedNlpIntentRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedNlpIntentRoute: AuthenticatedNlpIntentRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

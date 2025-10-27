@@ -17,8 +17,8 @@ export default function SignInForm() {
 
   const form = useForm({
     defaultValues: {
-      username: "",
-      password: "",
+      username: "igorsily",
+      password: "10342512ws",
     },
     onSubmit: async ({ value }) => {
       const response = await login(value.username, value.password);
