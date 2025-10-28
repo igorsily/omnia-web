@@ -1,5 +1,7 @@
+import { TanStackDevtools } from '@tanstack/react-devtools';
+import { FormDevtoolsPlugin } from '@tanstack/react-form-devtools';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { useState } from "react";
 import ReactDOM from "react-dom/client";
@@ -47,8 +49,18 @@ function App() {
   );
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <ReactQueryDevtools initialIsOpen={false} />
+        <RouterProvider router={router} />
+      <TanStackDevtools plugins={[
+        {
+          name: 'TanStack Query',
+          render: <ReactQueryDevtoolsPanel />,
+        },
+        // {
+        //   name: 'TanStack Router',
+        //   render: <TanStackRouterDevtoolsPanel />,
+        // },
+        FormDevtoolsPlugin()
+      ]} />
     </QueryClientProvider>
   );
 }

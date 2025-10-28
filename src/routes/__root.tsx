@@ -1,12 +1,23 @@
-import {
-  createRootRouteWithContext,
-  HeadContent,
-  Outlet,
-} from "@tanstack/react-router";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { createAuthContext } from "@/guards/route-guard";
+import {
+    createRootRouteWithContext,
+    HeadContent,
+    Outlet,
+} from "@tanstack/react-router";
+import { NuqsAdapter } from 'nuqs/adapters/tanstack-router';
 import "../index.css";
+
+type RouterContext = {
+  meta: {
+    breadcrumb?: string | ((params: Record<string, string>) => string);
+  }
+  auth: {
+    isAuthenticated: boolean;
+    user: unknown;
+  };
+};
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   async beforeLoad() {
@@ -29,7 +40,9 @@ function RootComponent() {
         disableTransitionOnChange
         storageKey="vite-ui-theme"
       >
-        <Outlet />
+        <NuqsAdapter>
+          <Outlet />
+        </NuqsAdapter>
         <Toaster position="top-right" />
       </ThemeProvider>
     </>

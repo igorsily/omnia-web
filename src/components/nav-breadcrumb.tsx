@@ -1,12 +1,12 @@
-import { Link, useMatches } from "@tanstack/react-router";
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { useMatches } from "@tanstack/react-router";
 import { Separator } from "./ui/separator";
 
 export function NavBreadcrumb() {
@@ -19,7 +19,7 @@ export function NavBreadcrumb() {
   if (breadcrumbMatches.length === 0) {
     return null;
   }
-  
+
   return (
     <>
       <Separator
@@ -35,8 +35,7 @@ export function NavBreadcrumb() {
             const lastSegment =
               path.split("/").filter(Boolean).pop() ?? "Início";
 
-            const label =
-              lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1);
+            const label = match.context.meta
 
             return (
               <BreadcrumbItem key={match.routeId}>
@@ -45,7 +44,7 @@ export function NavBreadcrumb() {
                 ) : (
                   <>
                     <BreadcrumbLink asChild>
-                      <Link to={path}>{label}</Link>
+                      <span >{label}</span>
                     </BreadcrumbLink>
                     <BreadcrumbSeparator className="hidden md:block" />
                   </>
