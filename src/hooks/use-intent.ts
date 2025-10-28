@@ -23,13 +23,9 @@ const fetchIntents = async (
   return response.data as ApiPaginatedResponse<IntentTable>;
 };
 
-export function useIntents({ page = 0, limit = 10 }: FetchParams = {}) {
+export function useIntents(params: FetchParams = {}) {
   return useQuery({
-    queryKey: ["intents", page, limit],
-    queryFn: () =>
-      fetchIntents({
-        page,
-        limit,
-      }),
+    queryKey: ["intents", params],
+    queryFn: () => fetchIntents(params),
   });
 }

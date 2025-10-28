@@ -40,6 +40,7 @@ function App() {
           queries: {
             staleTime: 60 * 1000, // 1 minuto
             refetchOnWindowFocus: false,
+            placeholderData: (prev) => prev,
           },
         },
       })

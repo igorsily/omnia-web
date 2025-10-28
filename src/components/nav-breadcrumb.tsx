@@ -19,7 +19,7 @@ export function NavBreadcrumb() {
   if (breadcrumbMatches.length === 0) {
     return null;
   }
-
+  
   return (
     <>
       <Separator
